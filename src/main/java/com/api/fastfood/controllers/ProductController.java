@@ -1,5 +1,6 @@
 package com.api.fastfood.controllers;
 
+import com.api.fastfood.dtos.Pagination;
 import com.api.fastfood.dtos.Products.CreateProductDto;
 import com.api.fastfood.dtos.Products.GetProductDto;
 import com.api.fastfood.models.ProductModel;
@@ -20,7 +21,8 @@ public class ProductController {
     public ProductController(ProductService _service) { this.service = _service; }
 
     @RequestMapping(value = "/product/get", method = RequestMethod.POST)
-    public ResponseEntity<List<ProductModel>> get(@RequestBody GetProductDto input) {
+    public ResponseEntity<List<ProductModel>> get(@RequestBody Pagination<GetProductDto> input) {
+        if (input.getModel() == null) input.setModel(new GetProductDto());
         return ResponseEntity.status(HttpStatus.OK).body(this.service.get(input));
     }
 
